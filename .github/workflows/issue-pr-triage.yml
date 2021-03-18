@@ -14,12 +14,19 @@ jobs:
     runs-on: ubuntu-latest
     name: Triage to Content Project
     steps:
-    - name: Print stuff
-      run: |
-        echo "a`$GITHUB_EVENT_NAME`a"
+    # - name: Run github cli command
+    #   run: |
+    #     gh api -X GET '/projects/5015214/columns' -H "Accept: application/vnd.github.inertia-preview+json"
+
+    # - name: Run curl command
+    #   run: | 
+    #       curl -s -X POST -u "$GITHUB_ACTOR:$TOKEN" --retry 3 \
+    #       -H 'Accept: application/vnd.github.inertia-preview+json' \
+    #       -d "{\"content_type\": \"PullRequest\", \"content_id\": $PULL_REQUEST_ID}" \
+    #       "https://api.github.com/projects/columns/$INITIAL_COLUMN_ID/cards"
 
     - name: Triages NEW issues and NEW pull requests to the Content Project
-      uses: srggrs/assign-one-project-github-action@1.2.1
+      uses: ./.github/actions/temp
       if: github.event.action == 'opened'
       with:
         project: 'https://github.com/newrelic/docs-website/projects/3'
@@ -30,7 +37,7 @@ jobs:
     name: Triage to Localization Project
     steps:
     - name: Triages NEW issues and NEW pull requests to the Localization Project
-      uses: srggrs/assign-one-project-github-action@1.2.1
+      uses: ./.github/actions/temp
       if: |
         contains(github.event.issue.labels.*.name, 'localization') ||
         contains(github.event.pull_request.labels.*.name, 'localization')
