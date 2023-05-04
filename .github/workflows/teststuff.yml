@@ -1,10 +1,10 @@
-name: test github output
+name: 'test github output'
+
 on:
   pull_request:
     types: [opened, reopened]
+
 jobs:
-  run:
-    runs-on: ubuntu-latest
   test-output:
     name: test output from a script
     runs-on: ubuntu-latest
